@@ -128,6 +128,7 @@ public class Snake : MonoBehaviour
     private State state;
 
     private SnakeSpeed snakeSpeed;
+    private bool canMove = true;
     #endregion
     
     private void Awake()
@@ -238,6 +239,7 @@ public class Snake : MonoBehaviour
             }
 
             transform.position = new Vector3(gridPosition.x, gridPosition.y, 0);
+            canMove = true;
             transform.eulerAngles = new Vector3(0, 0, GetAngleFromVector(gridMoveDirectionVector));
             UpdateBodyParts();
         }
@@ -247,43 +249,50 @@ public class Snake : MonoBehaviour
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
-        
-        // Cambio dirección hacia arriba
-        if (verticalInput > 0) // Si he pulsado hacia arriba (W o Flecha Arriba)
-        {
-            if (gridMoveDirection != Direction.Down) // Si iba en horizontal
-            {
-                // Cambio la dirección hacia arriba (0,1)
-                gridMoveDirection = Direction.Up;
-            }
-        }
-        
-        // Cambio dirección hacia abajo
-        // Input es abajo?
-        if (verticalInput < 0)
-        {
-            // Mi dirección hasta ahora era horizontal
-            if (gridMoveDirection != Direction.Up)
-            {
-                gridMoveDirection = Direction.Down;
-            }
-        }
 
-        // Cambio dirección hacia derecha
-        if (horizontalInput > 0)
+        if (canMove)
         {
-            if (gridMoveDirection != Direction.Left)
+            // Cambio dirección hacia arriba
+            if (verticalInput > 0) // Si he pulsado hacia arriba (W o Flecha Arriba)
             {
-                gridMoveDirection = Direction.Right;
+                if (gridMoveDirection != Direction.Down) // Si iba en horizontal
+                {
+                    canMove = false;
+                    // Cambio la dirección hacia arriba (0,1)
+                    gridMoveDirection = Direction.Up;
+                }
             }
-        }
-        
-        // Cambio dirección hacia izquierda
-        if (horizontalInput < 0)
-        {
-            if (gridMoveDirection != Direction.Right)
+
+            // Cambio dirección hacia abajo
+            // Input es abajo?
+            if (verticalInput < 0)
             {
-                gridMoveDirection = Direction.Left;
+                // Mi dirección hasta ahora era horizontal
+                if (gridMoveDirection != Direction.Up)
+                {
+                    canMove = false;
+                    gridMoveDirection = Direction.Down;
+                }
+            }
+
+            // Cambio dirección hacia derecha
+            if (horizontalInput > 0)
+            {
+                if (gridMoveDirection != Direction.Left)
+                {
+                    canMove = false;
+                    gridMoveDirection = Direction.Right;
+                }
+            }
+
+            // Cambio dirección hacia izquierda
+            if (horizontalInput < 0)
+            {
+                if (gridMoveDirection != Direction.Right)
+                {
+                    canMove = false;
+                    gridMoveDirection = Direction.Left;
+                }
             }
         }
     }
