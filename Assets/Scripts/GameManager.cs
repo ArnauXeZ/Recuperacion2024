@@ -28,8 +28,8 @@ public class GameManager : MonoBehaviour
         SoundManager.CreateSoundManagerGameObject();
 
         // Obtener el tamaño del nivel seleccionado
-        levelWidth = PlayerPrefs.GetInt("LevelWidth", 10);
-        levelHeight = PlayerPrefs.GetInt("LevelHeight", 10);
+        levelWidth = PlayerPrefs.GetInt("LevelWidth", 11);
+        levelHeight = PlayerPrefs.GetInt("LevelHeight", 11);
 
         // Configuración de la cabeza de serpiente
         GameObject snakeHeadGameObject = new GameObject("Snake Head");
