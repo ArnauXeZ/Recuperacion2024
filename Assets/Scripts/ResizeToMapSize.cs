@@ -2,25 +2,31 @@ using UnityEngine;
 
 public class ResizeToMapSize : MonoBehaviour
 {
+    [SerializeField] private LevelGrid levelGrid;
+    [SerializeField] private GameObject backgroundObject;
+
     private void Start()
     {
-        // Encontrar el objeto con el script LevelGrid en la escena
-        LevelGrid levelGrid = FindObjectOfType<LevelGrid>();
-
-        // Verificar si se encontró un LevelGrid
-        if (levelGrid != null)
+        if (levelGrid != null && backgroundObject != null)
         {
-            // Obtener el tamaño del mapa desde el LevelGrid
             Vector2Int mapSize = levelGrid.GetMapSize();
+            float width = mapSize.x;
+            float height = mapSize.y;
 
-            // Ajustar el tamaño del sprite al tamaño del mapa
-            transform.localScale = new Vector3(mapSize.x, mapSize.y, 1f);
+            // Obtener el transform del objeto vacío del fondo
+            Transform backgroundTransform = backgroundObject.transform;
+
+            // Ajustar la escala del objeto vacío
+            Vector3 newScale = new Vector3(width, height, 1f);
+            backgroundTransform.localScale = newScale;
         }
         else
         {
-            Debug.LogError("No LevelGrid found in the scene.");
+            Debug.LogError("LevelGrid o backgroundObject no están asignados en el inspector.");
         }
     }
 }
+
+
 
 

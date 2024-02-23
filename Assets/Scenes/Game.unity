@@ -1566,6 +1566,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59cfe94f107763841b985239925595e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelGrid: {fileID: 2085311337}
+  backgroundObject: {fileID: 1196108859}
 --- !u!1 &1291558711
 GameObject:
   m_ObjectHideFlags: 0

@@ -22,12 +22,9 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
 
-        // Obtener una referencia al componente LevelGrid en la escena
-        levelGrid = FindObjectOfType<LevelGrid>();
-        if (levelGrid == null)
-        {
-            Debug.LogError("No se encontró ningún objeto LevelGrid en la escena.");
-        }
+        // Obtener el tamaño del nivel seleccionado
+        levelWidth = PlayerPrefs.GetInt("LevelWidth", 10);
+        levelHeight = PlayerPrefs.GetInt("LevelHeight", 10);
     }
 
     private void Start()
