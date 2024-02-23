@@ -8,7 +8,10 @@ public class GameManager : MonoBehaviour
     private Snake snake;
 
     private bool isPaused;
-    
+
+    private int levelWidth;
+    private int levelHeight;
+
     private void Awake()
     {
         // Singleton
@@ -18,24 +21,31 @@ public class GameManager : MonoBehaviour
         }
 
         Instance = this;
+
+        // Obtener una referencia al componente LevelGrid en la escena
+        levelGrid = FindObjectOfType<LevelGrid>();
+        if (levelGrid == null)
+        {
+            Debug.LogError("No se encontró ningún objeto LevelGrid en la escena.");
+        }
     }
-    
+
     private void Start()
     {
         SoundManager.CreateSoundManagerGameObject();
-        
+
         // Configuración de la cabeza de serpiente
         GameObject snakeHeadGameObject = new GameObject("Snake Head");
         SpriteRenderer snakeSpriteRenderer = snakeHeadGameObject.AddComponent<SpriteRenderer>();
         snakeSpriteRenderer.sprite = GameAssets.Instance.snakeHeadSprite;
         snake = snakeHeadGameObject.AddComponent<Snake>();
-        
-        // Configurar el LevelGrid
-        levelGrid = new LevelGrid(20, 20);
+
+        // Configurar el LevelGrid con el tamaño seleccionado
+        levelGrid = new LevelGrid(levelWidth, levelHeight);
         snake.Setup(levelGrid);
         levelGrid.Setup(snake);
 
-        // Inicializo tema score
+        // Inicializo el marcador de puntuación
         Score.InitializeStaticScore();
 
         isPaused = false;
@@ -43,12 +53,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        // if (Input.GetKeyDown(KeyCode.R))
-        // {
-        //     Loader.Load(Loader.Scene.Game);
-        // }
-        
-        // Lógica de Pause con tecla Escape
+        // Lógica de pausa con la tecla Escape
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isPaused)
@@ -73,7 +78,7 @@ public class GameManager : MonoBehaviour
         PauseUI.Instance.Show();
         isPaused = true;
     }
-    
+
     public void ResumeGame()
     {
         Time.timeScale = 1f;
@@ -81,3 +86,4 @@ public class GameManager : MonoBehaviour
         isPaused = false;
     }
 }
+

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LevelGrid
+public class LevelGrid : MonoBehaviour
 {
     private Vector2Int foodGridPosition;
     private GameObject foodGameObject;
@@ -15,7 +15,12 @@ public class LevelGrid
         width = w;
         height = h;
     }
-
+    
+    public Vector2Int GetMapSize()
+    {
+        return new Vector2Int(width, height);
+    }
+    
     public void Setup(Snake snake)
     {
         this.snake = snake;
