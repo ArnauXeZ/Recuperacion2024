@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Snake : MonoBehaviour
 {
@@ -116,7 +117,7 @@ public class Snake : MonoBehaviour
     private float horizontalInput, verticalInput;
 
     private float gridMoveTimer;
-    private float gridMoveTimerMax = 0.5f; // La serpiente se moverá a cada segundo
+    public float gridMoveTimerMax = 0.5f; // La serpiente se moverá a cada segundo
 
     private LevelGrid levelGrid;
 
@@ -125,11 +126,15 @@ public class Snake : MonoBehaviour
     private List<SnakeBodyPart> snakeBodyPartsList;
 
     private State state;
-    
+
+    private SnakeSpeed snakeSpeed;
     #endregion
     
     private void Awake()
     {
+     
+        snakeSpeed = FindObjectOfType<SnakeSpeed>();
+        
         startGridPosition = new Vector2Int(0, 0);
         gridPosition = startGridPosition;
 
@@ -145,6 +150,10 @@ public class Snake : MonoBehaviour
 
     private void Update()
     {
+        if (SceneManager.GetActiveScene().buildIndex == 5)
+        {
+            gridMoveTimerMax = snakeSpeed.moveSpeed;
+        }
         switch (state)
         {
             case State.Alive:
