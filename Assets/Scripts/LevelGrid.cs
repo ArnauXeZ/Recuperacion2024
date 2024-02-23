@@ -4,12 +4,19 @@ public class LevelGrid : MonoBehaviour
 {
     private Vector2Int foodGridPosition;
     private GameObject foodGameObject;
-    
+
     private int width;
     private int height;
 
     private Snake snake;
 
+    public void Initialize(int w, int h)
+    {
+        width = w;
+        height = h;
+    }
+   
+    // Constructor que acepta el ancho y la altura del nivel
     public LevelGrid(int w, int h)
     {
         width = w;
@@ -20,7 +27,7 @@ public class LevelGrid : MonoBehaviour
     {
         return new Vector2Int(width, height);
     }
-    
+
     public void Setup(Snake snake)
     {
         this.snake = snake;
@@ -47,17 +54,17 @@ public class LevelGrid : MonoBehaviour
         // while (condicion){
         // cosas
         // }
-        
+
         // { cosas }
         // while (condicion)
-        
+
         do
         {
             foodGridPosition = new Vector2Int(
                 Random.Range(-width / 2, width / 2),
                 Random.Range(-height / 2, height / 2));
         } while (snake.GetFullSnakeBodyGridPosition().IndexOf(foodGridPosition) != -1);
-        
+
         foodGameObject = new GameObject("Food");
         SpriteRenderer foodSpriteRenderer = foodGameObject.AddComponent<SpriteRenderer>();
         foodSpriteRenderer.sprite = GameAssets.Instance.foodSprite;
@@ -68,7 +75,7 @@ public class LevelGrid : MonoBehaviour
     {
         int w = Half(width);
         int h = Half(height);
-        
+
         // Me salgo por la derecha
         if (gridPosition.x > w)
         {
@@ -95,3 +102,4 @@ public class LevelGrid : MonoBehaviour
         return number / 2;
     }
 }
+

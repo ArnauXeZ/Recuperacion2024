@@ -21,15 +21,15 @@ public class GameManager : MonoBehaviour
         }
 
         Instance = this;
-
-        // Obtener el tamaño del nivel seleccionado
-        levelWidth = PlayerPrefs.GetInt("LevelWidth", 10);
-        levelHeight = PlayerPrefs.GetInt("LevelHeight", 10);
     }
 
     private void Start()
     {
         SoundManager.CreateSoundManagerGameObject();
+
+        // Obtener el tamaño del nivel seleccionado
+        levelWidth = PlayerPrefs.GetInt("LevelWidth", 10);
+        levelHeight = PlayerPrefs.GetInt("LevelHeight", 10);
 
         // Configuración de la cabeza de serpiente
         GameObject snakeHeadGameObject = new GameObject("Snake Head");
@@ -46,6 +46,13 @@ public class GameManager : MonoBehaviour
         Score.InitializeStaticScore();
 
         isPaused = false;
+
+        // Ajustar la escala del fondo para que coincida con el tamaño del mapa
+        GameObject backgroundObject = GameObject.Find("Background"); // Nombre del objeto vacío del fondo
+        if (backgroundObject != null)
+        {
+            backgroundObject.transform.localScale = new Vector3(levelWidth, levelHeight, 1f);
+        }
     }
 
     private void Update()
@@ -83,4 +90,5 @@ public class GameManager : MonoBehaviour
         isPaused = false;
     }
 }
+
 
