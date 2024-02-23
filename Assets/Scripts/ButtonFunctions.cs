@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class ButtonFunctions : MonoBehaviour
 {
-    // Función para cargar la escena del nivel 1
+    // Función para cargar la escena 
     public void LoadLevel1()
     {
         SceneManager.LoadScene("Level1");
@@ -19,7 +19,10 @@ public class ButtonFunctions : MonoBehaviour
         SceneManager.LoadScene("Level3");
     }
 
-    // Puedes agregar más funciones para otros botones aquí
+    public void Game()
+    {
+        SceneManager.LoadScene("Game");
+    }
 
 }
 

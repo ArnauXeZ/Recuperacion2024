@@ -27,7 +27,7 @@ public class GameOverUI : MonoBehaviour
     // Singleton
     public static GameOverUI Instance { get; private set; }
     
-    [SerializeField] private Button restartButton;
+    
     
     [SerializeField] private TextMeshProUGUI messsageText;
     [SerializeField] private TextMeshProUGUI scoreText;
@@ -48,7 +48,7 @@ public class GameOverUI : MonoBehaviour
 
         Instance = this;
         
-        restartButton.onClick.AddListener(() => {Loader.Load(Loader.Scene.Game);});
+        
 
         Hide();
     }

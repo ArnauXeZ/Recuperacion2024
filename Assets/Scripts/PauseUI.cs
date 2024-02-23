@@ -25,6 +25,7 @@ public class PauseUI : MonoBehaviour
         {
             Time.timeScale = 1f;
             Loader.Load(Loader.Scene.MainMenu);
+            GameManager.Instance.ResetAllValues();
         });
         
         Hide();

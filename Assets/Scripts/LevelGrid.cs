@@ -6,8 +6,8 @@ public class LevelGrid
     //això era 0private
     public GameObject foodGameObject;
 
-    private int width;
-    private int height;
+    public int width;
+    public int height;
 
     private Snake snake;
 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LevelSizeSelection : MonoBehaviour
@@ -16,9 +17,13 @@ public class LevelSizeSelection : MonoBehaviour
         int width = (int)widthSlider.value;
         int height = (int)heightSlider.value;
 
-        // Guardar el tamaño del nivel en PlayerPrefs
-        PlayerPrefs.SetInt("LevelWidth", width);
-        PlayerPrefs.SetInt("LevelHeight", height);
+        if(SceneManager.GetActiveScene().buildIndex == 3)
+        {
+            // Guardar el tamaño del nivel en PlayerPrefs
+            PlayerPrefs.SetInt("LevelWidth", width);
+            PlayerPrefs.SetInt("LevelHeight", height);
+        }
+
 
         // Iniciar el juego con el tamaño seleccionado
         Loader.Load(Loader.Scene.Game);

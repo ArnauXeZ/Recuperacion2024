@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    public GameObject backgroundObject;
 
     private LevelGrid levelGrid;
     private Snake snake;
@@ -14,7 +15,7 @@ public class GameManager : MonoBehaviour
     private int levelHeight;
 
     private float foodTimer; // Temporizador para el cambio de posición de la comida
-    private const float maxFoodTimer = 10f; // Tiempo máximo antes de cambiar la posición de la comida
+    private const float maxFoodTimer = 5f; // Tiempo máximo antes de cambiar la posición de la comida
 
     private void Awake()
     {
@@ -52,7 +53,7 @@ public class GameManager : MonoBehaviour
         isPaused = false;
 
         // Ajustar la escala del fondo para que coincida con el tamaño del mapa
-        GameObject backgroundObject = GameObject.Find("Background"); // Nombre del objeto vacío del fondo
+        backgroundObject = GameObject.Find("Background"); // Nombre del objeto vacío del fondo
         if (backgroundObject != null)
         {
             backgroundObject.transform.localScale = new Vector3(levelWidth, levelHeight, 1f);
@@ -89,6 +90,12 @@ public class GameManager : MonoBehaviour
         
     }
 
+    public void ResetAllValues()
+    {
+        backgroundObject.transform.localScale = Vector3.one;
+        PlayerPrefs.DeleteKey("LevelWidth");
+        PlayerPrefs.DeleteKey("LevelHeight");
+    }
     public void SnakeDied()
     {
         GameOverUI.Instance.Show(Score.TrySetNewHighScore());
