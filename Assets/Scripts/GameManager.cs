@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -72,15 +73,20 @@ public class GameManager : MonoBehaviour
                 PauseGame();
             }
         }
-        // Incrementar el temporizador de la comida
-        foodTimer += Time.deltaTime;
 
-        // Verificar si ha pasado el tiempo límite y si hay una comida en escena
-        if (foodTimer >= maxFoodTimer && levelGrid.foodGameObject != null)
+        if (SceneManager.GetActiveScene().buildIndex == 4)
         {
-            levelGrid.MoveFood(); // Cambiar la posición de la comida
-            foodTimer = 0f; // Reiniciar el temporizador
+            // Incrementar el temporizador de la comida
+            foodTimer += Time.deltaTime;
+
+            // Verificar si ha pasado el tiempo límite y si hay una comida en escena
+            if (foodTimer >= maxFoodTimer && levelGrid.foodGameObject != null)
+            {
+                levelGrid.MoveFood(); // Cambiar la posición de la comida
+                foodTimer = 0f; // Reiniciar el temporizador
+            }
         }
+        
     }
 
     public void SnakeDied()
