@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
     private int levelWidth;
     private int levelHeight;
 
+    private float foodTimer; // Temporizador para el cambio de posición de la comida
+    private const float maxFoodTimer = 10f; // Tiempo máximo antes de cambiar la posición de la comida
+
     private void Awake()
     {
         // Singleton
@@ -68,6 +71,15 @@ public class GameManager : MonoBehaviour
             {
                 PauseGame();
             }
+        }
+        // Incrementar el temporizador de la comida
+        foodTimer += Time.deltaTime;
+
+        // Verificar si ha pasado el tiempo límite y si hay una comida en escena
+        if (foodTimer >= maxFoodTimer && levelGrid.foodGameObject != null)
+        {
+            levelGrid.MoveFood(); // Cambiar la posición de la comida
+            foodTimer = 0f; // Reiniciar el temporizador
         }
     }
 
