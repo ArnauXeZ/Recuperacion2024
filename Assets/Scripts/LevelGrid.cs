@@ -1,36 +1,42 @@
 using UnityEngine;
 
-public class LevelGrid 
+public class LevelGrid
 {
+    // Position of the food on the grid
     private Vector2Int foodGridPosition;
-    //això era 0private
+    // Reference to the food GameObject
     public GameObject foodGameObject;
 
+    // Width and height of the level grid
     public int width;
     public int height;
 
+    // Reference to the snake object
     private Snake snake;
 
-    private float foodTimer; // Temporizador para el cambio de posición de la comida
-    private const float maxFoodTimer = 5f; // Tiempo máximo antes de cambiar la posición de la comida
+    // Timer for food position change
+    private float foodTimer;
+    // Maximum time before changing food position
+    private const float maxFoodTimer = 5f;
 
+    // Update method is called once per frame
     private void Update()
     {
-        // Incrementar el temporizador de la comida
+        // Increment the food timer
         foodTimer += Time.deltaTime;
 
-        // Verificar si ha pasado el tiempo límite y si hay una comida en escena
+        // Check if it's time to change the food position and if there is food in the scene
         if (foodTimer >= maxFoodTimer && foodGameObject != null)
         {
-            MoveFood(); // Cambiar la posición de la comida
-            foodTimer = 0f; // Reiniciar el temporizador
+            MoveFood(); // Change the position of the food
+            foodTimer = 0f; // Reset the timer
         }
     }
 
-    //era privat
+    // Move the food to a new random position
     public void MoveFood()
     {
-        // Generar nueva posición para la comida
+        // Generate a new position for the food that is not occupied by the snake
         Vector2Int newPosition;
         do
         {
@@ -39,41 +45,41 @@ public class LevelGrid
                 Random.Range(-height / 2, height / 2));
         } while (snake.GetFullSnakeBodyGridPosition().Contains(newPosition));
 
-        // Mover la comida a la nueva posición
+        // Move the food to the new position
         foodGridPosition = newPosition;
         foodGameObject.transform.position = new Vector3(foodGridPosition.x, foodGridPosition.y, 0);
 
-        Debug.Log("Comida movida a: " + newPosition);
+        Debug.Log("Food moved to: " + newPosition);
     }
 
-    // Método para inicializar el nivel con su tamaño
+    // Initialize the level with its size
     public void Initialize(int w, int h)
     {
         width = w;
         height = h;
     }
 
-    // Constructor que acepta el ancho y la altura del nivel
+    // Constructor that accepts the width and height of the level
     public LevelGrid(int w, int h)
     {
         width = w;
         height = h;
     }
 
-    // Método para obtener el tamaño del mapa
+    // Method to get the size of the map
     public Vector2Int GetMapSize()
     {
         return new Vector2Int(width, height);
     }
 
-    // Método para configurar el nivel con la serpiente y la comida
+    // Set up the level with the snake and the food
     public void Setup(Snake snake)
     {
         this.snake = snake;
         SpawnFood();
     }
 
-    // Método para intentar que la serpiente coma la comida
+    // Attempt to make the snake eat the food
     public bool TrySnakeEatFood(Vector2Int snakeGridPosition)
     {
         if (snakeGridPosition == foodGridPosition)
@@ -89,10 +95,10 @@ public class LevelGrid
         }
     }
 
-    // Método para generar la comida en una posición aleatoria
+    // Spawn the food at a random position
     private void SpawnFood()
     {
-        // Generar una posición aleatoria para la comida que no esté ocupada por la serpiente
+        // Generate a random position for the food that is not occupied by the snake
         do
         {
             foodGridPosition = new Vector2Int(
@@ -100,20 +106,20 @@ public class LevelGrid
                 Random.Range(-height / 2, height / 2));
         } while (snake.GetFullSnakeBodyGridPosition().Contains(foodGridPosition));
 
-        // Crear el objeto de comida y establecer su posición
+        // Create the food object and set its position
         foodGameObject = new GameObject("Food");
         SpriteRenderer foodSpriteRenderer = foodGameObject.AddComponent<SpriteRenderer>();
         foodSpriteRenderer.sprite = GameAssets.Instance.foodSprite;
         foodGameObject.transform.position = new Vector3(foodGridPosition.x, foodGridPosition.y, 0);
     }
 
-    // Método para validar la posición dentro del mapa
+    // Validate the grid position within the map
     public Vector2Int ValidateGridPosition(Vector2Int gridPosition)
     {
         int w = Half(width);
         int h = Half(height);
 
-        // Verificar si la posición se sale por la derecha o por arriba
+        // Check if the position goes out from the right or top
         if (gridPosition.x > w)
         {
             gridPosition.x = -w;
@@ -123,7 +129,7 @@ public class LevelGrid
             gridPosition.y = -h;
         }
 
-        // Verificar si la posición se sale por la izquierda o por abajo
+        // Check if the position goes out from the left or bottom
         if (gridPosition.x < -w)
         {
             gridPosition.x = w;
@@ -136,9 +142,10 @@ public class LevelGrid
         return gridPosition;
     }
 
-    // Método para dividir un número por 2
+    // Divide a number by 2
     private int Half(int number)
     {
         return number / 2;
     }
 }
+
